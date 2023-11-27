@@ -60,7 +60,9 @@
                     case "3":
                         Console.WriteLine("3 was selected");
                         break;
-
+                    case "4":
+                        Console.WriteLine("4 was selected");
+                        break;
                     default:
                         {
                             Console.WriteLine("Please select a value in the list");
