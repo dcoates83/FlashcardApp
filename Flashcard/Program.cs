@@ -1,4 +1,4 @@
-﻿using Flashcard.Services;
+﻿using Flashcards.Services;
 
 namespace Flashcard
 {

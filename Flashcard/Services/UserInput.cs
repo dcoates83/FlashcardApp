@@ -1,4 +1,6 @@
-﻿namespace Flashcard.Services
+﻿using Flashcards.Models;
+
+namespace Flashcards.Services
 {
     internal class UserInput
     {
@@ -58,7 +60,15 @@
 
                         break;
                     case "3":
-                        Console.WriteLine("3 was selected");
+                        StackManger.DisplayStacks(new List<FlashcardStack> { new FlashcardStack { StackId = 1, Name = "Test Stack", Description = "This is a test stack" } });
+                        var studyResp = Console.ReadLine();
+
+                        if (IsValidUserResponse(studyResp))
+                        {
+                            // add logic here to match the studyResp to see if the stacks Databases matches the name
+                            StackManger.StudyStack(studyResp);
+                        }
+                        Console.WriteLine("");
                         break;
                     case "4":
                         Console.WriteLine("4 was selected");

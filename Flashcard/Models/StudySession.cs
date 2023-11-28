@@ -1,4 +1,4 @@
-﻿namespace Flashcard.Models
+﻿namespace Flashcards.Models
 {
     class StudySession
     {
