@@ -4,6 +4,28 @@ namespace Flashcards.Services
 {
     public class StackManger
     {
+        public static void DisplayMenuOptions(ref bool running)
+        {
+
+
+            Console.WriteLine("-----------------------------------");
+            Console.WriteLine("Stack Menu");
+            Console.WriteLine();
+            Console.WriteLine("What would you like to do?");
+            Console.WriteLine(
+              @"
+        Type 0 to Return to Main Menu
+        Type 1 to Create a Stack
+        Type 2 to Delete a Stack
+        Type 3 to Rename a Stack
+        Type 4 to View All Stacks
+        ");
+            Console.WriteLine("-----------------------------------");
+
+            var resp = Console.ReadLine();
+
+            ParseUserInput(resp, ref running);
+        }
 
         public static void DisplayStacks(IEnumerable<FlashcardStack> stacks)
         {

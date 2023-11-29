@@ -4,7 +4,9 @@ namespace Flashcards.Services
 {
     internal class UserInput
     {
-        public static void PromptUser()
+
+        // Should maybe be renames to main menu
+        public static void MainMenu()
         {
 
 
@@ -36,6 +38,7 @@ namespace Flashcards.Services
                 return true;
             }
         }
+
         public static void ParseUserInput(string? input, ref bool running)
         {
 
@@ -45,20 +48,30 @@ namespace Flashcards.Services
 
                 switch (input)
                 {
+                    // Exit Application
                     case "0":
                         Console.WriteLine();
                         Console.WriteLine("Closing application...");
                         Console.WriteLine();
                         running = false;
                         break;
+
+                    // Manage Stacks
                     case "1":
 
-                        Console.WriteLine("1 was selected");
+                        var RunningSubMenu = true;
+                        while (RunningSubMenu)
+                        {
+                            StackManger.DisplayMenuOptions(ref RunningSubMenu);
+                        }
                         break;
+
+                    // Manage Flashcards
                     case "2":
                         Console.WriteLine("2 was selected");
-
                         break;
+
+                    // Study
                     case "3":
                         StackManger.DisplayStacks(new List<FlashcardStack> { new FlashcardStack { StackId = 1, Name = "Test Stack", Description = "This is a test stack" } });
                         var studyResp = Console.ReadLine();
@@ -70,6 +83,8 @@ namespace Flashcards.Services
                         }
                         Console.WriteLine("");
                         break;
+
+                    // View Study Session Data
                     case "4":
                         Console.WriteLine("4 was selected");
                         break;

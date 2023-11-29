@@ -11,7 +11,7 @@ namespace Flashcard
 
             while (Running)
             {
-                UserInput.PromptUser();
+                UserInput.MainMenu();
 
                 var resp = Console.ReadLine();
 
