@@ -24,7 +24,7 @@ namespace Flashcards.Services
 
             var resp = Console.ReadLine();
 
-            ParseUserInput(resp, ref running);
+
         }
 
         public static void DisplayStacks(IEnumerable<FlashcardStack> stacks)

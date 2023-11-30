@@ -11,11 +11,11 @@ namespace Flashcard
 
             while (Running)
             {
-                UserInput.MainMenu();
+                Menu.MainMenu();
 
                 var resp = Console.ReadLine();
 
-                UserInput.ParseUserInput(resp, ref Running);
+                Menu.ParseUserInput(resp, ref Running);
             }
         }
     }

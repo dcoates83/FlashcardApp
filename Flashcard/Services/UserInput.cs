@@ -2,7 +2,7 @@
 
 namespace Flashcards.Services
 {
-    internal class UserInput
+    internal class Menu
     {
 
         // Should maybe be renames to main menu
@@ -60,6 +60,7 @@ namespace Flashcards.Services
                     case "1":
 
                         var RunningSubMenu = true;
+
                         while (RunningSubMenu)
                         {
                             StackManger.DisplayMenuOptions(ref RunningSubMenu);
