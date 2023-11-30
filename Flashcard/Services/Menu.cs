@@ -1,5 +1,5 @@
 ﻿using Flashcards.Models;
-
+using Flashcards.Utilities;
 namespace Flashcards.Services
 {
     internal class Menu
@@ -8,41 +8,23 @@ namespace Flashcards.Services
         // Should maybe be renames to main menu
         public static void MainMenu()
         {
-
-
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine("Main Menu");
-            Console.WriteLine();
-            Console.WriteLine("What would you like to do?");
-            Console.WriteLine(
-                @"
+            var menuOptions = @"
         Type 0 to  Close Application
         Type 1 to Manage Stacks
         Type 2 to Manage Flashcards
         Type 3 to Study
-        Type 4 to View Study Session Data
-        ");
-            Console.WriteLine("-----------------------------------");
-        }
-        public static bool IsValidUserResponse(string? resp)
-        {
+        Type 4 to View Study Session Data";
 
-            if (string.IsNullOrWhiteSpace(resp))
-            {
-                Console.WriteLine("Please Enter a valid response");
-                Console.WriteLine();
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+
+            DisplayMenu.DisplayMenuOptions("main", menuOptions);
+
         }
+
 
         public static void ParseUserInput(string? input, ref bool running)
         {
 
-            if (IsValidUserResponse(input))
+            if (ResponseValidator.IsValidResponse(input))
             {
 
 
@@ -63,7 +45,7 @@ namespace Flashcards.Services
 
                         while (RunningSubMenu)
                         {
-                            StackManger.DisplayMenuOptions(ref RunningSubMenu);
+                            StackManger.StackMenu(ref RunningSubMenu);
                         }
                         break;
 
@@ -77,7 +59,7 @@ namespace Flashcards.Services
                         StackManger.DisplayStacks(new List<FlashcardStack> { new FlashcardStack { StackId = 1, Name = "Test Stack", Description = "This is a test stack" } });
                         var studyResp = Console.ReadLine();
 
-                        if (IsValidUserResponse(studyResp))
+                        if (ResponseValidator.IsValidResponse(studyResp))
                         {
                             // add logic here to match the studyResp to see if the stacks Databases matches the name
                             StackManger.StudyStack(studyResp);
