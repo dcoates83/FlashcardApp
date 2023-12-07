@@ -5,7 +5,7 @@ namespace Flashcards.Services
 {
     public class StackManger
     {
-        public static void StackMenu(ref bool running)
+        public static void Menu(ref bool running)
         {
 
             var menuOptions = @"
@@ -38,11 +38,11 @@ namespace Flashcards.Services
                     // Manage Stacks
                     case "1":
 
-                        var RunningSubMenu = true;
+                        var runningSubMenu = true;
 
-                        while (RunningSubMenu)
+                        while (runningSubMenu)
                         {
-                            StackManger.StackMenu(ref RunningSubMenu);
+                            StackManger.Menu(ref runningSubMenu);
                             var resp = Console.ReadLine();
                         }
                         break;
@@ -98,8 +98,20 @@ namespace Flashcards.Services
             Console.WriteLine();
             Console.WriteLine("Input a current stack name or input 0 to return to main menu");
         }
+        public static FlashcardStack PickStack(string stackName)
+        {
 
-        public static void ManageStack(FlashcardStack stack)
+        }
+
+        public static void CreateStack(FlashcardStack stack)
+        {
+
+        }
+        public static void RenameStack(string stackName)
+        {
+
+        }
+        public static void DeleteStack(string stackName)
         {
 
         }
@@ -107,5 +119,6 @@ namespace Flashcards.Services
         {
 
         }
+
     }
 }

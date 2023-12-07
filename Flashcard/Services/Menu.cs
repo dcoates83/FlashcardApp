@@ -41,11 +41,11 @@ namespace Flashcards.Services
                     // Manage Stacks
                     case "1":
 
-                        var RunningSubMenu = true;
+                        var runningSubMenu = true;
 
-                        while (RunningSubMenu)
+                        while (runningSubMenu)
                         {
-                            StackManger.StackMenu(ref RunningSubMenu);
+                            StackManger.Menu(ref runningSubMenu);
                         }
                         break;
 
