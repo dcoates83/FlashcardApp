@@ -10,9 +10,8 @@ namespace Flashcards.Services
         {
             var menuOptions = @"
         Type 0 to  Close Application
-        Type 1 to Manage Stacks
-        Type 2 to Manage Flashcards
-        Type 3 to Study
+        Type 1 to Manage Stacks & Flashcards
+        Type 2 to Study
         Type 4 to View Study Session Data";
 
 
@@ -38,20 +37,9 @@ namespace Flashcards.Services
                         running = false;
                         break;
 
-                    // Manage Stacks
+                    // Manage Stacks & Flashcards
                     case "1":
-
-                        var runningSubMenu = true;
-
-                        while (runningSubMenu)
-                        {
-                            StackManger.Menu(ref runningSubMenu);
-                        }
-                        break;
-
-                    // Manage Flashcards
-                    case "2":
-                        Console.WriteLine("2 was selected");
+                        StackManger.Menu();
                         break;
 
                     // Study
