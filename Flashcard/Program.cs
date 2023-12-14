@@ -7,15 +7,15 @@ namespace Flashcard
         static void Main(string[] args)
         {
 
-            var Running = true;
+            var running = true;
 
-            while (Running)
+            while (running)
             {
-                Menu.MainMenu();
+                MainMenu.Menu();
 
                 var resp = Console.ReadLine();
 
-                Menu.ParseUserInput(resp, ref Running);
+                MainMenu.ParseUserInput(resp, ref running);
             }
         }
     }

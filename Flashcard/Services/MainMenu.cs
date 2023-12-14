@@ -2,21 +2,45 @@
 using Flashcards.Utilities;
 namespace Flashcards.Services
 {
-    internal class Menu
+    internal class MainMenu
     {
 
-        // Should maybe be renames to main menu
-        public static void MainMenu()
+        static bool _running = true;
+
+        public static void Menu()
         {
-            var menuOptions = @"
-        Type 0 to  Close Application
-        Type 1 to Manage Stacks & Flashcards
-        Type 2 to Study
-        Type 4 to View Study Session Data";
 
 
-            DisplayMenu.DisplayMenuOptions("main", menuOptions);
 
+            //while (_running)
+            //{
+            //    MainMenu.Menu();
+
+            //    //var resp = Console.ReadLine();
+
+            //    //MainMenu.ParseUserInput(resp, ref Running);
+            //}
+            var menuOptions = new List<(string, Action)> {
+
+                ("Close Application", () =>
+                {
+                    Console.WriteLine("Closing application...");
+                    _running = false;
+                }
+                ),
+    ("Manage Flashcards", () =>  StackManger.Menu()),
+    ("Study Flashcards", () => Console.WriteLine("Action: Delete a Stack")),
+    ("View Statistics", () => Console.WriteLine("Action: Rename a Stack")),
+
+                        };
+
+            var menuBuilder = new MenuBuilder();
+            var menu = menuBuilder.CreateMenu("Main Menu", menuOptions);
+
+            var menuManager = new MenuManager(menu);
+            var menuLoop = new MenuLoop(menuManager);
+
+            menuLoop.Start();
         }
 
 

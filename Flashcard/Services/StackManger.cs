@@ -7,26 +7,26 @@ namespace Flashcards.Services
     {
         public static void Menu()
         {
-            var menuOptions = new List<(string, Action)>
-{
-    ("Return to Main Menu", () => Console.WriteLine("Action: Return to Main Menu")),
+
+            var menuOptions = new List<(string, Action)> {
+
+                ("Return to Main Menu", () => Console.WriteLine("Returning to Main Menu...")),
     ("Create a Stack", () => Console.WriteLine("Action: Create a Stack")),
     ("Delete a Stack", () => Console.WriteLine("Action: Delete a Stack")),
     ("Rename a Stack", () => Console.WriteLine("Action: Rename a Stack")),
+    ("Edit Flashcards in a Stack", () => Console.WriteLine("Action: Rename a Stack")),
     ("View All Stacks", () => Console.WriteLine("Action: View All Stacks")),
     ("View All Flashcards in a Stack", () => Console.WriteLine("Action: View All Flashcards in a Stack"))
-            };
+                        };
 
             var menuBuilder = new MenuBuilder();
             var menu = menuBuilder.CreateMenu("Manage Stacks & Flashcards", menuOptions);
 
             var menuManager = new MenuManager(menu);
             var menuLoop = new MenuLoop(menuManager);
+
             menuLoop.Start();
 
-
-
-            //DisplayMenu.DisplayMenuOptions("Stack", menuOptions);
 
         }
         public static void ParseUserInput(string? input, ref bool running)
@@ -109,10 +109,7 @@ namespace Flashcards.Services
             Console.WriteLine();
             Console.WriteLine("Input a current stack name or input 0 to return to main menu");
         }
-        //public static FlashcardStack PickStack(string stackName)
-        //{
 
-        //}
 
         public static void CreateStack(FlashcardStack stack)
         {

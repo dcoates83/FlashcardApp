@@ -22,10 +22,12 @@
     public class MenuManager
     {
         private MenuItem _menu;
+        private bool _shouldStop;
 
         public MenuManager(MenuItem menu)
         {
             _menu = menu;
+            _shouldStop = false;
         }
 
         public void DisplayMenu()
@@ -33,16 +35,22 @@
             DisplaySubMenu(_menu);
         }
 
-        private static void DisplaySubMenu(MenuItem menuItem, string indent = "")
+        public bool ShouldStop()
+        {
+            return _shouldStop;
+        }
+
+        private void DisplaySubMenu(MenuItem menuItem, string indent = "")
         {
             Console.WriteLine($"{indent}{menuItem.Title}");
 
-            foreach (var subMenuItem in menuItem.SubMenu)
+            for (int i = 0; i < menuItem.SubMenu.Count; i++)
             {
-                Console.WriteLine($"{indent} - {subMenuItem.Title}");
+                Console.WriteLine($"{indent} {i} : {menuItem.SubMenu[i].Title}");
             }
 
             Console.Write($"{indent}Enter choice: ");
+
             var choice = Console.ReadLine();
 
             if (int.TryParse(choice, out int index) && index >= 0 && index < menuItem.SubMenu.Count)
@@ -60,6 +68,12 @@
             else
             {
                 Console.WriteLine("Invalid choice!");
+            }
+
+            // Example: If the user enters '0', stop the loop
+            if (choice == "0")
+            {
+                _shouldStop = true;
             }
         }
     }
