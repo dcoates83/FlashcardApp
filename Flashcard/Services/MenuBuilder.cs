@@ -6,9 +6,9 @@ namespace Flashcards.Services
     {
         public MenuItem CreateMenu(string title, List<(string, Action)> options)
         {
-            var menu = new MenuItem(title);
+            MenuItem menu = new(title);
 
-            foreach (var (optionText, action) in options)
+            foreach ((string optionText, Action action) in options)
             {
                 menu.AddSubMenu(new MenuItem(optionText, action));
             }

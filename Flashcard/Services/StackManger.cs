@@ -8,22 +8,23 @@ namespace Flashcards.Services
         public static void Menu()
         {
 
-            var menuOptions = new List<(string, Action)> {
+            List<(string, Action)> menuOptions = new()
+            {
 
                 ("Return to Main Menu", () => Console.WriteLine("Returning to Main Menu...")),
-    ("Create a Stack", () => Console.WriteLine("Action: Create a Stack")),
-    ("Delete a Stack", () => Console.WriteLine("Action: Delete a Stack")),
-    ("Rename a Stack", () => Console.WriteLine("Action: Rename a Stack")),
-    ("Edit Flashcards in a Stack", () => Console.WriteLine("Action: Rename a Stack")),
-    ("View All Stacks", () => Console.WriteLine("Action: View All Stacks")),
-    ("View All Flashcards in a Stack", () => Console.WriteLine("Action: View All Flashcards in a Stack"))
+                ("Create a Stack", () => Console.WriteLine("Action: Create a Stack")),
+                ("Delete a Stack", () => Console.WriteLine("Action: Delete a Stack")),
+                ("Rename a Stack", () => Console.WriteLine("Action: Rename a Stack")),
+                ("Edit Flashcards in a Stack", () => Console.WriteLine("Action: Rename a Stack")),
+                ("View All Stacks", () => Console.WriteLine("Action: View All Stacks")),
+                ("View All Flashcards in a Stack", () => Console.WriteLine("Action: View All Flashcards in a Stack"))
                         };
 
-            var menuBuilder = new MenuBuilder();
-            var menu = menuBuilder.CreateMenu("Manage Stacks & Flashcards", menuOptions);
+            MenuBuilder menuBuilder = new();
+            MenuItem menu = menuBuilder.CreateMenu("Manage Stacks & Flashcards", menuOptions);
 
-            var menuManager = new MenuManager(menu);
-            var menuLoop = new MenuLoop(menuManager);
+            MenuManager menuManager = new(menu);
+            MenuLoop menuLoop = new(menuManager);
 
             menuLoop.Start();
 
@@ -49,7 +50,6 @@ namespace Flashcards.Services
                     // Manage Stacks
                     case "1":
 
-                        var runningSubMenu = true;
 
                         //while (runningSubMenu)
                         //{
@@ -65,8 +65,8 @@ namespace Flashcards.Services
 
                     // Study
                     case "3":
-                        StackManger.DisplayStacks(new List<FlashcardStack> { new FlashcardStack { StackId = 1, Name = "Test Stack", Description = "This is a test stack" } });
-                        var studyResp = Console.ReadLine();
+                        StackManger.DisplayStacks(new List<FlashcardStack> { new() { StackId = 1, Name = "Test Stack", Description = "This is a test stack" } });
+                        string? studyResp = Console.ReadLine();
 
                         if (ResponseValidator.IsValidResponse(studyResp))
                         {
@@ -91,6 +91,7 @@ namespace Flashcards.Services
 
         }
 
+
         public static void DisplayStacks(IEnumerable<FlashcardStack> stacks)
         {
             if (stacks == null || !stacks.Any())
@@ -102,7 +103,7 @@ namespace Flashcards.Services
             Console.WriteLine("{0,-10} {1,-30} {2}", "Stack ID", "Name", "Description");
             Console.WriteLine(new string('-', 50));
 
-            foreach (var stack in stacks)
+            foreach (FlashcardStack stack in stacks)
             {
                 Console.WriteLine("{0,-10} {1,-30} {2}", stack.StackId, stack.Name, stack.Description ?? "N/A");
             }
@@ -125,8 +126,9 @@ namespace Flashcards.Services
         }
         public static void StudyStack(string stackName)
         {
-
+            Console.WriteLine($"StudyStack was called with {stackName}");
         }
+
 
     }
 }

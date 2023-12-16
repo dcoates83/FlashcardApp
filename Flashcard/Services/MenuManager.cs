@@ -6,7 +6,7 @@
         public Action Action { get; }
         public List<MenuItem> SubMenu { get; }
 
-        public MenuItem(string title, Action action = null)
+        public MenuItem(string title, Action? action = null)
         {
             Title = title;
             Action = action;
@@ -21,7 +21,7 @@
 
     public class MenuManager
     {
-        private MenuItem _menu;
+        private readonly MenuItem _menu;
         private bool _shouldStop;
 
         public MenuManager(MenuItem menu)
@@ -51,11 +51,13 @@
 
             Console.Write($"{indent}Enter choice: ");
 
-            var choice = Console.ReadLine();
+            string? choice = Console.ReadLine();
+
+            Console.WriteLine();
 
             if (int.TryParse(choice, out int index) && index >= 0 && index < menuItem.SubMenu.Count)
             {
-                var selectedMenuItem = menuItem.SubMenu[index];
+                MenuItem selectedMenuItem = menuItem.SubMenu[index];
                 if (selectedMenuItem.Action != null)
                 {
                     selectedMenuItem.Action.Invoke();
