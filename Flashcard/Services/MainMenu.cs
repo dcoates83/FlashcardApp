@@ -1,4 +1,6 @@
-﻿namespace Flashcards.Services
+﻿using Flashcards.Utilities;
+
+namespace Flashcards.Services
 {
     internal class MainMenu
     {
@@ -16,7 +18,7 @@
                     _running = false;
                 }
                 ),
-                ("Manage Flashcards", StackManger.Menu),
+                ("Manage Flashcards", StackManager.Menu),
                 ("Study Flashcards", StudyManager.Menu),
                 ("View Statistics", () => Console.WriteLine("Action: Rename a Stack")),
 

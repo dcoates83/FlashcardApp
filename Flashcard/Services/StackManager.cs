@@ -1,8 +1,9 @@
 ﻿using Flashcards.Models;
+using Flashcards.Utilities;
 
 namespace Flashcards.Services
 {
-    public class StackManger
+    public class StackManager
     {
         public static void Menu()
         {

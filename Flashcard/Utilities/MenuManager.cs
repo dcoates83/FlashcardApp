@@ -1,4 +1,4 @@
-﻿namespace Flashcards.Services
+﻿namespace Flashcards.Utilities
 {
     public class MenuItem
     {

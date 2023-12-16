@@ -27,10 +27,10 @@ namespace Flashcards.Services
 
         public static void StudyByStack()
         {
-            StackManger.DisplayStacks(
+            StackManager.DisplayStacks(
         new List<FlashcardStack> { new FlashcardStack { StackId = 1, Name = "Test Stack", Description = "This is a test stack" } }
         );
-            StackManger.StudyStack(Console.ReadLine());
+            StackManager.StudyStack(Console.ReadLine());
 
         }
         public static void StudyAll()
