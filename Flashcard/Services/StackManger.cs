@@ -1,5 +1,4 @@
 ﻿using Flashcards.Models;
-using Flashcards.Utilities;
 
 namespace Flashcards.Services
 {
@@ -12,9 +11,9 @@ namespace Flashcards.Services
             {
 
                 ("Return to Main Menu", () => Console.WriteLine("Returning to Main Menu...")),
-                ("Create a Stack", () => Console.WriteLine("Action: Create a Stack")),
-                ("Delete a Stack", () => Console.WriteLine("Action: Delete a Stack")),
-                ("Rename a Stack", () => Console.WriteLine("Action: Rename a Stack")),
+                ("Create a Stack", CreateStack),
+                ("Delete a Stack", DeleteStack),
+                ("Rename a Stack", RenameStack),
                 ("Edit Flashcards in a Stack", () => Console.WriteLine("Action: Rename a Stack")),
                 ("View All Stacks", () => Console.WriteLine("Action: View All Stacks")),
                 ("View All Flashcards in a Stack", () => Console.WriteLine("Action: View All Flashcards in a Stack"))
@@ -27,66 +26,6 @@ namespace Flashcards.Services
             MenuLoop menuLoop = new(menuManager);
 
             menuLoop.Start();
-
-
-        }
-        public static void ParseUserInput(string? input, ref bool running)
-        {
-
-            if (ResponseValidator.IsValidResponse(input))
-            {
-
-
-                switch (input)
-                {
-                    // Exit Application
-                    case "0":
-                        Console.WriteLine();
-                        Console.WriteLine("Closing application...");
-                        Console.WriteLine();
-                        running = false;
-                        break;
-
-                    // Manage Stacks
-                    case "1":
-
-
-                        //while (runningSubMenu)
-                        //{
-                        //    StackManger.Menu(ref runningSubMenu);
-                        //    var resp = Console.ReadLine();
-                        //}
-                        break;
-
-                    // Manage Flashcards
-                    case "2":
-                        Console.WriteLine("2 was selected");
-                        break;
-
-                    // Study
-                    case "3":
-                        StackManger.DisplayStacks(new List<FlashcardStack> { new() { StackId = 1, Name = "Test Stack", Description = "This is a test stack" } });
-                        string? studyResp = Console.ReadLine();
-
-                        if (ResponseValidator.IsValidResponse(studyResp))
-                        {
-                            // add logic here to match the studyResp to see if the stacks Databases matches the name
-                            StackManger.StudyStack(studyResp);
-                        }
-                        Console.WriteLine("");
-                        break;
-
-                    // View Study Session Data
-                    case "4":
-                        Console.WriteLine("4 was selected");
-                        break;
-                    default:
-                        {
-                            Console.WriteLine("Please select a value in the list");
-                        }
-                        break;
-                }
-            }
 
 
         }
@@ -112,21 +51,21 @@ namespace Flashcards.Services
         }
 
 
-        public static void CreateStack(FlashcardStack stack)
+        public static void CreateStack()
         {
-
+            Console.WriteLine($"CreateStack was called ");
         }
-        public static void RenameStack(string stackName)
+        public static void RenameStack()
         {
-
+            Console.WriteLine($"RenameStack was called");
         }
-        public static void DeleteStack(string stackName)
+        public static void DeleteStack()
         {
-
+            Console.WriteLine($"DeleteStack was called ");
         }
         public static void StudyStack(string stackName)
         {
-            Console.WriteLine($"StudyStack was called with {stackName}");
+            Console.WriteLine($"StudyStack was called with");
         }
 
 
