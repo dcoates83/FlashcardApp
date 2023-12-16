@@ -64,9 +64,10 @@ namespace Flashcards.Services
         {
             Console.WriteLine($"DeleteStack was called ");
         }
-        public static void StudyStack(string stackName)
+        public static void StudyStack(int id)
         {
-            Console.WriteLine($"StudyStack was called with");
+            _ = FlashcardManager.GetFlashcards(id);
+
         }
 
 

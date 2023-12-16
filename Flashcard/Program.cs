@@ -1,21 +1,19 @@
 ﻿using Flashcards.Services;
 
-namespace Flashcard
+namespace Flashcards
 {
     internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
 
-            var running = true;
+            bool running = true;
 
             while (running)
             {
                 MainMenu.Menu();
 
-                var resp = Console.ReadLine();
 
-                MainMenu.ParseUserInput(resp, ref running);
             }
         }
     }

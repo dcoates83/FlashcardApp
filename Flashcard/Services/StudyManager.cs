@@ -1,4 +1,5 @@
 ﻿using Flashcards.Models;
+using Flashcards.Utilities;
 
 namespace Flashcards.Services
 {
@@ -8,29 +9,47 @@ namespace Flashcards.Services
         public static void Menu()
         {
 
-            var menuOptions = new List<(string, Action)> {
+            List<(string, Action)> menuOptions = new()
+            {
 
                 ("Return to Main Menu", () => Console.WriteLine("Returning to Main Menu...")),
-                ("Study All", () => StudyAll()),
-                ("Study by Stack", ()=> StudyByStack()),
+                ("Study All", StudyAll),
+                ("Study by Stack", StudyByStack),
 
                         };
 
-            var menuBuilder = new MenuBuilder();
-            var menu = menuBuilder.CreateMenu("Study Menu", menuOptions);
+            MenuBuilder menuBuilder = new();
+            MenuItem menu = menuBuilder.CreateMenu("Study Menu", menuOptions);
 
-            var menuManager = new MenuManager(menu);
-            var menuLoop = new MenuLoop(menuManager);
+            MenuManager menuManager = new(menu);
+            MenuLoop menuLoop = new(menuManager);
 
             menuLoop.Start();
         }
 
         public static void StudyByStack()
         {
+
+            List<FlashcardStack> flashcardStacks = new()
+            { new() { StackId = 1, Name = "Test Stack", Description = "This is a test stack" } };
+
             StackManager.DisplayStacks(
-        new List<FlashcardStack> { new FlashcardStack { StackId = 1, Name = "Test Stack", Description = "This is a test stack" } }
+                flashcardStacks
+
         );
-            StackManager.StudyStack(Console.ReadLine());
+            string? response = Console.ReadLine();
+            if (ResponseValidator.IsValidResponse(response))
+            {
+                if (int.TryParse(response, out int number))
+                {
+
+                    StackManager.StudyStack(number);
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid number");
+                }
+            }
 
         }
         public static void StudyAll()
