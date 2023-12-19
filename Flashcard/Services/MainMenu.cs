@@ -4,7 +4,8 @@ namespace Flashcards.Services
 {
     internal class MainMenu
     {
-        private static bool _running = true;
+        private static readonly bool _running = true;
+        // maybe privately store the menu object here
 
         public static void Menu()
         {
@@ -15,12 +16,12 @@ namespace Flashcards.Services
                 ("Close Application", () =>
                 {
                     Console.WriteLine("Closing application...");
-                    _running = false;
+
                 }
                 ),
-                ("Manage Flashcards", StackManager.Menu),
+                ("Manage Flashcards", Stack.Menu),
                 ("Study Flashcards", StudyManager.Menu),
-                ("View Statistics", () => Console.WriteLine("Action: Rename a Stack")),
+                ("View Statistics", () => Console.WriteLine("Action: View statistics")),
 
                         };
 
@@ -33,7 +34,10 @@ namespace Flashcards.Services
             menuLoop.Start();
         }
 
+        public static void StopMenu()
+        {
 
+        }
 
     }
 }

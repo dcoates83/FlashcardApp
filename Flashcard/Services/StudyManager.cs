@@ -31,9 +31,10 @@ namespace Flashcards.Services
         {
 
             List<FlashcardStack> flashcardStacks = new()
-            { new() { StackId = 1, Name = "Test Stack", Description = "This is a test stack" } };
+            { new(
+                name: "test stack", description: "test description", 1)  };
 
-            StackManager.DisplayStacks(
+            Stack.DisplayStacks(
                 flashcardStacks
 
         );
@@ -43,7 +44,7 @@ namespace Flashcards.Services
                 if (int.TryParse(response, out int number))
                 {
 
-                    StackManager.StudyStack(number);
+                    Stack.StudyStack(number);
                 }
                 else
                 {

@@ -14,6 +14,11 @@ namespace Flashcards.Services
             // TODO: If the stackId is valid, but no flashcards are available, return an empty list
             return new List<FlashcardModal>();
         }
+        public static FlashcardModal GetFlashcard()
+        {
+
+            return new FlashcardModal();
+        }
         public static void EditFlashcard()
         {
 

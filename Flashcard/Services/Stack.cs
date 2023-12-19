@@ -3,8 +3,9 @@ using Flashcards.Utilities;
 
 namespace Flashcards.Services
 {
-    public class StackManager
+    public class Stack
     {
+
         public static void Menu()
         {
 
@@ -12,7 +13,7 @@ namespace Flashcards.Services
             {
 
                 ("Return to Main Menu", () => Console.WriteLine("Returning to Main Menu...")),
-                ("Create a Stack", CreateStack),
+                ("Create a Stack", ()=> CreateStack()),
                 ("Delete a Stack", DeleteStack),
                 ("Rename a Stack", RenameStack),
                 ("Edit Flashcards in a Stack", () => Console.WriteLine("Action: Rename a Stack")),
@@ -52,9 +53,26 @@ namespace Flashcards.Services
         }
 
 
-        public static void CreateStack()
+        public static FlashcardStack CreateStack()
         {
-            Console.WriteLine($"CreateStack was called ");
+
+            Console.WriteLine("Enter a name for the stack");
+            string name = Console.ReadLine();
+            _ = ResponseValidator.IsValidResponse(name);
+
+            Console.WriteLine("Enter a description for the stack");
+            string description = Console.ReadLine();
+            _ = ResponseValidator.IsValidResponse(description);
+
+            // TODO: Create a new stack with database here
+
+            FlashcardStack stack = new(name, description, 1);
+
+            Console.WriteLine($"Stack {stack.Name} was created");
+            Console.WriteLine($"Stack ID: {stack.StackId}");
+            Console.WriteLine($"Stack Description: {stack.Description}");
+
+            return stack;
         }
         public static void RenameStack()
         {
