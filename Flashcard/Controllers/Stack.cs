@@ -1,7 +1,9 @@
-﻿using Flashcards.Models;
+﻿using Flashcards.DataAccess;
+using Flashcards.Models;
+using Flashcards.Services;
 using Flashcards.Utilities;
 
-namespace Flashcards.Services
+namespace Flashcards.Controllers
 {
     public class Stack
     {
@@ -63,6 +65,10 @@ namespace Flashcards.Services
             Console.WriteLine("Enter a description for the stack");
             string description = Console.ReadLine();
             _ = ResponseValidator.IsValidResponse(description);
+
+            DBFactory Factory = new();
+            Console.WriteLine($"DBFactory was called with _connectionString:{Factory}");
+
 
             // TODO: Create a new stack with database here
 
