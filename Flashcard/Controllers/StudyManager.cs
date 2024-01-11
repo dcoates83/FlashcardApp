@@ -1,8 +1,7 @@
-﻿using Flashcards.Controllers;
-using Flashcards.Models;
+﻿using Flashcards.Models;
 using Flashcards.Utilities;
 
-namespace Flashcards.Services
+namespace Flashcards.Controllers
 {
     public class StudyManager
     {
@@ -32,8 +31,8 @@ namespace Flashcards.Services
         {
 
             List<FlashcardStack> flashcardStacks = new()
-            { new(
-                name: "test stack", description: "test description", 1)  };
+            { new FlashcardStack{
+            Name ="test"} };
 
             Stack.DisplayStacks(
                 flashcardStacks

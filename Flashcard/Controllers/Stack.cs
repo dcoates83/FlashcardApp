@@ -15,9 +15,10 @@ namespace Flashcards.Controllers
             {
 
                 ("Return to Main Menu", () => Console.WriteLine("Returning to Main Menu...")),
-                ("Create a Stack", ()=> CreateStack()),
+                ("Create a Stack", CreateStack),
                 ("Delete a Stack", DeleteStack),
                 ("Rename a Stack", RenameStack),
+                ("Rename a Stacks Description", RenameDescription),
                 ("Edit Flashcards in a Stack", () => Console.WriteLine("Action: Rename a Stack")),
                 ("View All Stacks", () => Console.WriteLine("Action: View All Stacks")),
                 ("View All Flashcards in a Stack", () => Console.WriteLine("Action: View All Flashcards in a Stack"))
@@ -33,7 +34,41 @@ namespace Flashcards.Controllers
 
 
         }
+        public static void ViewStacks()
+        {
 
+            using DBFactory factory = new();
+            factory.ExecuteQuery("SELECT * FROM Stacks", reader =>
+            {
+
+                List<FlashcardStack> _stacks = new() { };
+
+                if (reader.HasRows)
+                {
+
+                    while (reader.Read())
+                    {
+                        Console.WriteLine("{0}\t{1}", reader.GetInt32(0),
+                            reader.GetString(1));
+                        FlashcardStack stack = new()
+                        {
+                            Name = reader.GetString(1),
+                            Description = reader.GetString(2),
+                            StackId = reader.GetInt32(0)
+                        };
+
+                        _stacks.Add(stack);
+                    }
+                    DisplayStacks(_stacks);
+                }
+                else
+                {
+
+                    Console.WriteLine("No Rows");
+
+                }
+            });
+        }
 
         public static void DisplayStacks(IEnumerable<FlashcardStack> stacks)
         {
@@ -51,11 +86,11 @@ namespace Flashcards.Controllers
                 Console.WriteLine("{0,-10} {1,-30} {2}", stack.StackId, stack.Name, stack.Description ?? "N/A");
             }
             Console.WriteLine();
-            Console.WriteLine("Input a current stack name or input 0 to return to main menu");
+
         }
 
 
-        public static FlashcardStack CreateStack()
+        public static void CreateStack()
         {
 
             Console.WriteLine("Enter a name for the stack");
@@ -66,23 +101,54 @@ namespace Flashcards.Controllers
             string description = Console.ReadLine();
             _ = ResponseValidator.IsValidResponse(description);
 
-            DBFactory Factory = new();
-            Console.WriteLine($"DBFactory was called with _connectionString:{Factory}");
 
 
-            // TODO: Create a new stack with database here
+            using (DBFactory factory = new())
+            {
+                factory.ExecuteQuery($"INSERT INTO Stacks (Name, Description)\r\nVALUES ('{name}', '{description}');");
+            }
 
-            FlashcardStack stack = new(name, description, 1);
 
-            Console.WriteLine($"Stack {stack.Name} was created");
-            Console.WriteLine($"Stack ID: {stack.StackId}");
-            Console.WriteLine($"Stack Description: {stack.Description}");
+            Console.WriteLine($"Stack {name} was created with the description: {description}");
 
-            return stack;
+
         }
         public static void RenameStack()
         {
-            Console.WriteLine($"RenameStack was called");
+            ViewStacks();
+            Console.WriteLine($"Which Stack would you like to rename?");
+            string name = Console.ReadLine();
+            _ = ResponseValidator.IsValidResponse(name);
+            Console.WriteLine(
+                $"What would you like to rename {name} to?");
+            string newName = Console.ReadLine();
+            _ = ResponseValidator.IsValidResponse(newName);
+
+            using (DBFactory factory = new())
+            {
+                factory.ExecuteQuery($"UPDATE Stacks\r\nSET Name = '{newName}'\r\nWHERE Name = '{name}';");
+            }
+            Console.WriteLine(
+                $"Stack: {name} was renamed to {newName}");
+
+        }
+        public static void RenameDescription()
+        {
+            ViewStacks();
+            Console.WriteLine($"Which Stack would you like to rename?");
+            string name = Console.ReadLine();
+            _ = ResponseValidator.IsValidResponse(name);
+            Console.WriteLine(
+                               $"What would you like to rename the description of Stack:{name} to?");
+            string newName = Console.ReadLine();
+            _ = ResponseValidator.IsValidResponse(newName);
+
+            using (DBFactory factory = new())
+            {
+                factory.ExecuteQuery($"UPDATE Stacks\r\nSET Description = '{newName}'\r\nWHERE Name = '{name}';");
+            }
+            Console.WriteLine(
+                               $"Stack: {name} description was renamed to {newName}");
         }
         public static void DeleteStack()
         {
