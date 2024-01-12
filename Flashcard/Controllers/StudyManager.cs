@@ -34,7 +34,7 @@ namespace Flashcards.Controllers
             { new FlashcardStack{
             Name ="test"} };
 
-            Stack.DisplayStacks(
+            StackManager.DisplayStacks(
                 flashcardStacks
 
         );
@@ -44,7 +44,7 @@ namespace Flashcards.Controllers
                 if (int.TryParse(response, out int number))
                 {
 
-                    Stack.StudyStack(number);
+                    StackManager.StudyStack(number);
                 }
                 else
                 {

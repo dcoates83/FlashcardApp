@@ -1,7 +1,6 @@
-﻿using Flashcards.Controllers;
-using Flashcards.Utilities;
+﻿using Flashcards.Utilities;
 
-namespace Flashcards.Services
+namespace Flashcards.Controllers
 {
     internal class MainMenu
     {
@@ -20,7 +19,7 @@ namespace Flashcards.Services
 
                 }
                 ),
-                ("Manage Flashcards", Stack.Menu),
+                ("Manage Flashcards", StackManager.Menu),
                 ("Study Flashcards", StudyManager.Menu),
                 ("View Statistics", () => Console.WriteLine("Action: View statistics")),
 

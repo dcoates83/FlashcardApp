@@ -1,11 +1,10 @@
 ﻿using Flashcards.DataAccess;
 using Flashcards.Models;
-using Flashcards.Services;
 using Flashcards.Utilities;
 
 namespace Flashcards.Controllers
 {
-    public class Stack
+    public class StackManager
     {
 
         public static void Menu()
@@ -19,7 +18,7 @@ namespace Flashcards.Controllers
                 ("Delete a Stack", DeleteStack),
                 ("Rename a Stack", RenameStack),
                 ("Rename a Stacks Description", RenameDescription),
-                ("Edit Flashcards in a Stack", () => Console.WriteLine("Action: Rename a Stack")),
+                ("Edit Flashcards in a Stack", FlashcardManager.EditFlashcards),
                 ("View All Stacks", ViewStacks),
                 ("View All Flashcards in a Stack", () => Console.WriteLine("Action: View All Flashcards in a Stack"))
                         };
