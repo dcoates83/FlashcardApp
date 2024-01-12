@@ -20,7 +20,7 @@ namespace Flashcards.Controllers
                 ("Rename a Stack", RenameStack),
                 ("Rename a Stacks Description", RenameDescription),
                 ("Edit Flashcards in a Stack", () => Console.WriteLine("Action: Rename a Stack")),
-                ("View All Stacks", () => Console.WriteLine("Action: View All Stacks")),
+                ("View All Stacks", ViewStacks),
                 ("View All Flashcards in a Stack", () => Console.WriteLine("Action: View All Flashcards in a Stack"))
                         };
 
@@ -152,7 +152,30 @@ namespace Flashcards.Controllers
         }
         public static void DeleteStack()
         {
-            Console.WriteLine($"DeleteStack was called ");
+
+            ViewStacks();
+            Console.WriteLine($"Which Stack would you like to delete?");
+            string name = Console.ReadLine();
+            _ = ResponseValidator.IsValidResponse(name);
+            Console.WriteLine(
+                                              $"Are you sure you want to delete {name}? (Y/N)");
+            string response = Console.ReadLine();
+            _ = ResponseValidator.IsValidResponse(response);
+            response = response.ToUpper();
+            if (response == "Y")
+            {
+                using (DBFactory factory = new())
+                {
+                    factory.ExecuteQuery($"DELETE FROM Stacks\r\nWHERE Name = '{name}';");
+                }
+                Console.WriteLine(
+                                                      $"Stack: {name} was deleted");
+            }
+            else
+            {
+                Console.WriteLine(
+                                                      $"Stack: {name} was not deleted");
+            }
         }
         public static void StudyStack(int id)
         {
