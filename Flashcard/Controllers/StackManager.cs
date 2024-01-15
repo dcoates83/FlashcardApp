@@ -1,6 +1,7 @@
 ﻿using Flashcards.DataAccess;
 using Flashcards.Models;
 using Flashcards.Utilities;
+using Spectre.Console;
 
 namespace Flashcards.Controllers
 {
@@ -47,8 +48,7 @@ namespace Flashcards.Controllers
 
                     while (reader.Read())
                     {
-                        Console.WriteLine("{0}\t{1}", reader.GetInt32(0),
-                            reader.GetString(1));
+
                         FlashcardStack stack = new()
                         {
                             Name = reader.GetString(1),
@@ -76,15 +76,19 @@ namespace Flashcards.Controllers
                 Console.WriteLine("No stacks available.");
                 return;
             }
-            Console.Clear();
-            Console.WriteLine("{0,-10} {1,-30} {2}", "Stack ID", "Name", "Description");
-            Console.WriteLine(new string('-', 50));
+            Table table = new();
+            _ = table.AddColumn("Stack ID");
+            _ = table.AddColumn("Name");
+            _ = table.AddColumn("Description");
+
+
 
             foreach (FlashcardStack stack in stacks)
             {
-                Console.WriteLine("{0,-10} {1,-30} {2}", stack.StackId, stack.Name, stack.Description ?? "N/A");
+                _ = table.AddRow(stack.StackId.ToString(), stack.Name, stack.Description);
             }
-            Console.WriteLine();
+
+            AnsiConsole.Write(table);
 
         }
 
