@@ -19,7 +19,7 @@ namespace Flashcards.Controllers
                 ("Delete a Stack", DeleteStack),
                 ("Rename a Stack", RenameStack),
                 ("Rename a Stacks Description", RenameDescription),
-                ("Edit Flashcards in a Stack", FlashcardManager.EditFlashcards),
+                ("Manage Flashcards in a Stack", FlashcardManager.Menu),
                 ("View All Stacks", ViewStacks),
                 ("View All Flashcards in a Stack", () => Console.WriteLine("Action: View All Flashcards in a Stack"))
                         };
