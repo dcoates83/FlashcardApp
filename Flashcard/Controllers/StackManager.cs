@@ -182,7 +182,7 @@ namespace Flashcards.Controllers
         }
         public static void StudyStack(int id)
         {
-            _ = FlashcardManager.GetFlashcards(id);
+            Console.WriteLine("study stack");
 
         }
 

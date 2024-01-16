@@ -17,11 +17,8 @@ namespace Flashcards.Controllers
 
                 ("Return to Main Menu", () => Console.WriteLine("Returning to Main Menu...")),
                 ("Create a Flashcard", AddFlashcard),
-                ("Delete a Flashcard", DeleteFlashcard),
                 ("Modify the front of a Flashcard", ModifyFrontOfFlashcard),
                 ("Modify the back of a Flashcard", ModifyBackOfFlashcard),
-                //modify both front and back
-                
                 ("Delete a Flashcard", DeleteFlashcard),
                 ("View All Flashcards", ViewFlashcards) };
 
@@ -43,7 +40,7 @@ namespace Flashcards.Controllers
 
             using DBFactory factory = new();
             StackManager.ViewStacks();
-            Console.WriteLine("Enter the Id of the stack you want to view:");
+            Console.WriteLine("Enter the stack id to view its Flashcard:");
             string? response = Console.ReadLine();
             if (ResponseValidator.IsValidResponse(response))
             {
@@ -104,7 +101,28 @@ namespace Flashcards.Controllers
                 if (ResponseValidator.IsValidResponse(newFrontContent))
                 {
                     using DBFactory factory = new();
-                    factory.ExecuteQuery($"UPDATE Flashcards\r\nSET FrontContent = '{newFrontContent}'\r\nWHERE FlashcardId = {flashcardId};");
+                    factory.ExecuteQuery($"UPDATE Flashcards\r\nSET FrontContent = '{newFrontContent}', LastModified = CURRENT_TIMESTAMP \r\nWHERE FlashcardId = {flashcardId};");
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid response");
+                }
+
+
+            }
+
+
+        }
+        public static void ModifyBackOfFlashcard()
+        {
+            int? flashcardId = GetFlashcardId();
+            if (flashcardId != null)
+            {
+                Console.WriteLine("Enter the new front content:");
+                string? newBackContent = Console.ReadLine();
+                if (ResponseValidator.IsValidResponse(newBackContent))
+                {
+                    ModifyBackOfFlashcard((int)flashcardId, newBackContent);
                 }
                 else
                 {
@@ -119,7 +137,7 @@ namespace Flashcards.Controllers
         public static void ModifyBackOfFlashcard(int flashcardId, string newBackContent)
         {
             using DBFactory factory = new();
-            factory.ExecuteQuery($"UPDATE Flashcards\r\nSET BackContent = '{newBackContent}'\r\nWHERE FlashcardId = {flashcardId};");
+            factory.ExecuteQuery($"UPDATE Flashcards\r\nSET BackContent = '{newBackContent}', LastModified = CURRENT_TIMESTAMP \r\nWHERE FlashcardId = {flashcardId};");
         }
 
         public static void DeleteFlashcard(int flashcardId)
@@ -127,7 +145,40 @@ namespace Flashcards.Controllers
             using DBFactory factory = new();
             factory.ExecuteQuery($"DELETE FROM Flashcards\r\nWHERE FlashcardId = {flashcardId};");
         }
+        public static void DeleteFlashcard()
+        {
+            int? flashcardId = GetFlashcardId();
+            if (flashcardId != null)
+            {
+                DeleteFlashcard((int)flashcardId);
+            }
+        }
 
+        public static void AddFlashcard()
+        {
+            StackManager.ViewStacks();
+            Console.WriteLine("Enter the stack id you want to add to:");
+            string? stackIdResp = Console.ReadLine();
+
+            if (ResponseValidator.IsValidResponse(stackIdResp))
+            {
+                if (int.TryParse(stackIdResp, out int stackId))
+                {
+                    Console.WriteLine("Enter the front content:");
+                    string? frontContent = Console.ReadLine();
+                    Console.WriteLine("Enter the back content:");
+                    string? backContent = Console.ReadLine();
+                    if (ResponseValidator.IsValidResponse(frontContent) && ResponseValidator.IsValidResponse(backContent))
+                    {
+                        AddFlashcard(stackId, frontContent, backContent);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid number");
+                }
+            }
+        }
         public static void AddFlashcard(int stackId, string frontContent, string backContent)
         {
             using DBFactory factory = new();
