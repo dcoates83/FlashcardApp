@@ -51,8 +51,8 @@ namespace Flashcards.Controllers
 
                         FlashcardStack stack = new()
                         {
+                            Description = reader.IsDBNull(2) ? "" : reader.GetString(2),
                             Name = reader.GetString(1),
-                            Description = reader.GetString(2),
                             StackId = reader.GetInt32(0)
                         };
 
@@ -194,11 +194,11 @@ namespace Flashcards.Controllers
 
                     while (reader.Read())
                     {
-                        //bug here
                         Flashcard flashcard = new()
                         {
-                            FrontContent = reader.GetString(1),
-                            BackContent = reader.GetString(2),
+                            // FlashcardId, StackId, FrontContent, BackContent, CreatedDate, LastModified
+                            FrontContent = reader.GetString(2),
+                            BackContent = reader.GetString(3),
                             FlashcardId = reader.GetInt32(0)
                         };
 
@@ -208,9 +208,11 @@ namespace Flashcards.Controllers
                 }
                 else
                 {
+                    {
 
-                    Console.WriteLine("No Rows");
+                        Console.WriteLine("No Rows");
 
+                    }
                 }
             });
 

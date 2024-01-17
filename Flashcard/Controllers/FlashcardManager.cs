@@ -247,7 +247,27 @@ namespace Flashcards.Controllers
                 }
             }
         }
+        public static void UpdateLastModified(int flashcardId)
+        {
+            using DBFactory factory = new();
+            factory.ExecuteQuery($"UPDATE Flashcards\r\nSET LastModified = CURRENT_TIMESTAMP \r\nWHERE FlashcardId = {flashcardId};");
+        }
+        public static void UpdateStudiedCorrectly(int flashcardId)
+        {
+            using DBFactory factory = new();
+            factory.ExecuteQuery($"UPDATE Flashcards\r\nSET AnsweredCorrectly = AnsweredCorrectly + 1 \r\nWHERE FlashcardId = {flashcardId};");
+        }
 
+        public static void UpdateStudiedIncorrectly(int flashcardId)
+        {
+            using DBFactory factory = new();
+            factory.ExecuteQuery($"UPDATE Flashcards\r\nSET AnsweredInCorrectly = AnsweredIncorrectly + 1 \r\nWHERE FlashcardId = {flashcardId};");
+        }
+        public static void UpdateLastStudied(int flashcardId)
+        {
+            using DBFactory factory = new();
+            factory.ExecuteQuery($"UPDATE Flashcards\r\nSET LastStudied = \tCURRENT_TIMESTAMP  \r\nWHERE FlashcardId = {flashcardId};");
+        }
         public static void StudyFlashcards(List<FlashcardModal> flashcards)
         {
             int flashcardIndex = 0;
@@ -258,8 +278,14 @@ namespace Flashcards.Controllers
             {
                 FlashcardModal flashcard = flashcards[flashcardIndex];
                 Console.WriteLine($"Front: {flashcard.FrontContent}");
-                Console.WriteLine("Press Enter to reveal the back");
-                _ = Console.ReadLine();
+                Console.WriteLine();
+                Console.WriteLine("Press Enter to reveal the back, press q to quit.");
+                string? resp = Console.ReadLine();
+                string quit = resp.ToUpper();
+                if (quit == "Q")
+                {
+                    break;
+                }
                 Console.WriteLine($"Back: {flashcard.BackContent}");
                 Console.WriteLine("Did you get it right? (Y/N)");
                 string? response = Console.ReadLine();
@@ -268,16 +294,20 @@ namespace Flashcards.Controllers
                     response = response.ToUpper();
                     if (response == "Y")
                     {
+
                         correctCount++;
+                        UpdateStudiedCorrectly(flashcard.FlashcardId);
                     }
                     else if (response == "N")
                     {
                         incorrectCount++;
+                        UpdateStudiedIncorrectly(flashcard.FlashcardId);
                     }
                     else
                     {
                         Console.WriteLine("Please enter a valid response");
                     }
+
                 }
                 else
                 {
