@@ -15,5 +15,18 @@ namespace Flashcards.Utilities
 
             return true;
         }
+        public static bool IsInt(string resp)
+        {
+            if (int.TryParse(resp, out _))
+            {
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Please Enter a valid number");
+                Console.WriteLine();
+                return false;
+            }
+        }
     }
 }

@@ -209,7 +209,84 @@ namespace Flashcards.Controllers
             return null;
         }
 
+        public static void StudyFlashcards()
+        {
+            List<FlashcardModal> flashcards = new();
 
+            using DBFactory factory = new();
+            StackManager.ViewStacks();
+            Console.WriteLine("Enter the stack id to study its Flashcard:");
+            string? response = Console.ReadLine();
+            if (ResponseValidator.IsValidResponse(response))
+            {
+                if (int.TryParse(response, out int stackId))
+                {
+
+                    factory.ExecuteQuery($"SELECT FlashcardId,FrontContent,BackContent, CreatedDate,LastModified \r\nFROM Flashcards\r\nJOIN Stacks\r\nON Flashcards.StackId = Stacks.StackId\r\nWHERE Stacks.StackId = {stackId};", reader =>
+                    {
+                        while (reader.Read())
+                        {
+
+                            FlashcardModal flashcard = new()
+                            {
+                                FlashcardId = reader.GetInt32(0),
+                                FrontContent = reader.GetString(1),
+                                BackContent = reader.GetString(2),
+                                CreatedDate = reader.GetDateTime(3),
+                                LastModified = reader.IsDBNull(4) ? null : reader.GetDateTime(4)
+                            };
+                            flashcards.Add(flashcard);
+                        }
+                    });
+
+                    StudyFlashcards(flashcards);
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid number");
+                }
+            }
+        }
+
+        public static void StudyFlashcards(List<FlashcardModal> flashcards)
+        {
+            int flashcardIndex = 0;
+            int flashcardCount = flashcards.Count;
+            int correctCount = 0;
+            int incorrectCount = 0;
+            while (flashcardIndex < flashcardCount)
+            {
+                FlashcardModal flashcard = flashcards[flashcardIndex];
+                Console.WriteLine($"Front: {flashcard.FrontContent}");
+                Console.WriteLine("Press Enter to reveal the back");
+                _ = Console.ReadLine();
+                Console.WriteLine($"Back: {flashcard.BackContent}");
+                Console.WriteLine("Did you get it right? (Y/N)");
+                string? response = Console.ReadLine();
+                if (ResponseValidator.IsValidResponse(response))
+                {
+                    response = response.ToUpper();
+                    if (response == "Y")
+                    {
+                        correctCount++;
+                    }
+                    else if (response == "N")
+                    {
+                        incorrectCount++;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please enter a valid response");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid response");
+                }
+                flashcardIndex++;
+            }
+            Console.WriteLine($"You got {correctCount} correct and {incorrectCount} incorrect");
+        }
 
     }
 }

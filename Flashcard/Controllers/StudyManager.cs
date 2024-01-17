@@ -1,5 +1,4 @@
-﻿using Flashcards.Models;
-using Flashcards.Utilities;
+﻿using Flashcards.Utilities;
 
 namespace Flashcards.Controllers
 {
@@ -30,28 +29,20 @@ namespace Flashcards.Controllers
         public static void StudyByStack()
         {
 
-            List<FlashcardStack> flashcardStacks = new()
-            { new FlashcardStack{
-            Name ="test"} };
 
-            StackManager.DisplayStacks(
-                flashcardStacks
+            StackManager.ViewStacks();
+            Console.WriteLine("Enter the id of the stack you would like to study: ");
+            string resp = Console.ReadLine();
 
-        );
-            string? response = Console.ReadLine();
-            if (ResponseValidator.IsValidResponse(response))
+            if (ResponseValidator.IsValidResponse(resp))
             {
-                if (int.TryParse(response, out int number))
+                if (ResponseValidator.IsInt(resp))
                 {
+                    int stackId = Convert.ToInt32(resp);
+                    StackManager.StudyStack(stackId);
+                }
 
-                    StackManager.StudyStack(number);
-                }
-                else
-                {
-                    Console.WriteLine("Please enter a valid number");
-                }
             }
-
         }
         public static void StudyAll()
         {

@@ -85,7 +85,7 @@ namespace Flashcards.Controllers
 
             foreach (FlashcardStack stack in stacks)
             {
-                _ = table.AddRow(stack.StackId.ToString(), stack.Name, stack.Description);
+                _ = table.AddRow(stack.StackId.ToString(), stack.Name, string.IsNullOrEmpty(stack.Description) ? "" : stack.Description);
             }
 
             AnsiConsole.Write(table);
@@ -182,7 +182,37 @@ namespace Flashcards.Controllers
         }
         public static void StudyStack(int id)
         {
-            Console.WriteLine("study stack");
+
+            using DBFactory factory = new();
+            factory.ExecuteQuery($"SELECT * FROM Flashcards\r\nWHERE StackId = {id}", reader =>
+            {
+
+                List<Flashcard> _flashcards = new() { };
+
+                if (reader.HasRows)
+                {
+
+                    while (reader.Read())
+                    {
+                        //bug here
+                        Flashcard flashcard = new()
+                        {
+                            FrontContent = reader.GetString(1),
+                            BackContent = reader.GetString(2),
+                            FlashcardId = reader.GetInt32(0)
+                        };
+
+                        _flashcards.Add(flashcard);
+                    }
+                    FlashcardManager.StudyFlashcards(_flashcards);
+                }
+                else
+                {
+
+                    Console.WriteLine("No Rows");
+
+                }
+            });
 
         }
 
